@@ -3,8 +3,7 @@ import { CatsService } from './cats.service';
 import { Cats } from './cats.entity';
 import { FindOneParams } from '../helpers/find_one_params';
 import { CreateCatDto } from './dto/create-cat.dto';
-import { ApiUseTags } from '@nestjs/swagger';
-
+import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiUseTags('cats')
 @Controller('cats')

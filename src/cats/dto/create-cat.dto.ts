@@ -1,15 +1,16 @@
 
 import { IsNumber, IsNotEmpty } from 'class-validator';
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class CreateCatDto {
   id: number
-  @IsNotEmpty()
+  @ApiModelProperty() @IsNotEmpty()
   name: string;
 
-  @IsNumber()
+  @ApiModelProperty() @IsNumber()
   age: number;
 
-  @IsNotEmpty()
+  @ApiModelProperty() @IsNotEmpty()
   breed: string;
 
 

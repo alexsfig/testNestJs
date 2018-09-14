@@ -23,7 +23,7 @@ export class CatsService {
 
   async create(@Body() cats: Cats) {
     const createdCat = await this.catsRepository.save(cats);
-    return { sdsdsd: createdCat };
+    return { cat: createdCat };
   }
 
   async delete(id){

@@ -13,6 +13,7 @@ async function bootstrap() {
     .setDescription('The cats API description')
     .setVersion('1.0')
     .addTag('cats')
+    .addTag('user')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);

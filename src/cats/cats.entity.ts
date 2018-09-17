@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Cats {
@@ -14,5 +15,7 @@ export class Cats {
   @Column({ length: 500 })
   breed: string;
 
+  @ManyToOne(type => User)
+  user: User;
 
 }

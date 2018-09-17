@@ -6,10 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Routes, RouterModule } from 'nest-router';
 import { Connection } from 'typeorm';
 import { CatsModule } from './cats/cats.module';
-// import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { UserService } from './user.service';
-
 
 const routes: Routes = [
   {
@@ -27,7 +24,7 @@ const routes: Routes = [
     // AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UserService],
+  providers: [AppService],
 })
 export class AppModule {
    constructor(private readonly connection: Connection) {}

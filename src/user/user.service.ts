@@ -1,7 +1,9 @@
-import { Injectable, Inject, Body } from '@nestjs/common';
+import { Injectable, Inject, Body, HttpStatus, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import {ErrorTypeEnum} from '../error_handler/ErrorTypeEnum';
+import {AppError} from '../error_handler/AppError';
 
 @Injectable()
 export class UserService {
@@ -14,29 +16,30 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  async findOne(id){
-    let cat = await this.userRepository.findOne(id);
-    if(!cat) return { 'Error': 'Cat does not exist' };
-    return cat;
+  async findOne(id): Promise<User> {
+    let user = await this.userRepository.findOne(id);
+    if(!user)  throw new AppError(ErrorTypeEnum.NOT_FOUND, User.name);
+    return user;
   }
 
 
-  async create(@Body() user: User) {
-    const createdCat = await this.userRepository.save(user);
-    return { cat: createdCat };
+  async create(@Body() user: User): Promise<User> {
+    const obj = this.userRepository.create(user);
+    return await this.userRepository.save(obj);
+
   }
 
-  async delete(id){
-    let cat = await this.userRepository.findOne(id);
-    if(!cat) return { 'Error': 'Cat does not exist' };
-    return await this.userRepository.remove(cat);
+  async delete(id): Promise<any>{
+    let user = await this.userRepository.findOne(id) ;
+    if(!user)  throw new AppError(ErrorTypeEnum.NOT_FOUND, User.name);
+    return await this.userRepository.remove(user);
   }
 
-  async update(id, @Body() user: User ){
-    let cat = await this.userRepository.update(id, user);
-    if(!cat) return { 'Error': 'Cat does not exist' };
-    let catUpdated = await this.userRepository.findOne(id);
-    return catUpdated;
+  async update(id, @Body() user: User ): Promise<any>{
+    let userFind = await this.userRepository.findOne(id) ;
+    if(!userFind)  throw new AppError(ErrorTypeEnum.NOT_FOUND, User.name);
+    let userUpt =  Object.assign(userFind, user)
+    return await this.userRepository.save(userUpt);
   }
 
 }

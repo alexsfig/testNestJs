@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, BeforeInsert, BeforeUpdate } from 'typeorm';
 import * as crypto from 'crypto';
 import { Cats } from '../cats/cats.entity';
 
@@ -28,16 +28,19 @@ export class User {
     length: 250,
   })
   public password: string;
-  // get password() L{ return this._password_hash }
-
 
   @OneToMany(type => Cats, cat => cat.user)
   cats: Cats[];
 
   @BeforeInsert()
-  updateDates() {
+  createPassword() {
     const passHash = crypto.createHmac('sha256', this.password ).digest('hex');
-    this.password = 'lorem idea';
+    this.password = passHash;
+  }
+  @BeforeUpdate()
+  updatePassword() {
+    const passHash = crypto.createHmac('sha256', this.password ).digest('hex');
+    this.password = passHash;
   }
 
 }

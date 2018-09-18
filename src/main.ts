@@ -2,11 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-
+import {DispatchError} from './error_handler/DispatchError';
 declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalFilters(new DispatchError());
   app.useGlobalPipes(new ValidationPipe());
   const options = new DocumentBuilder()
     .setTitle('Cats example')

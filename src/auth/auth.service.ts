@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { UserService } from '../user/user.service';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -10,14 +11,20 @@ export class AuthService {
     private readonly usersService: UserService
   ) {}
 
-  async createToken(username: string): Promise<any> {
-    const user: JwtPayload = { username: username };
-    const accessToken = this.jwtService.sign(user);
-    return {
-      expiresmmIn: 3600,
-      accessToken,
-      username: username
-    };
+  async createToken(username: string, password: string): Promise<any> {
+    const u = await this.usersService.findOneByUsername(username)
+    if (u!) {
+      if (await this.usersService.compareHash(password, u.passwordHash)) {
+        const user: JwtPayload = { username: username };
+        const accessToken = this.jwtService.sign(user);
+        return {
+          expiresIn: 3600,
+          accessToken,
+          username: username
+        };
+      }
+    }
+    return { message: 'Username or password wrong!' };
   }
 
   async validateUser(payload: JwtPayload): Promise<any> {

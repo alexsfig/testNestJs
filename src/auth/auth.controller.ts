@@ -8,7 +8,7 @@ export class AuthController {
 
   @Post('token')
   async createToken(@Body() authDto: AuthDto): Promise<any> {
-    return await this.authService.createToken(authDto.username);
+    return await this.authService.createToken(authDto.username, authDto.password);
   }
 
   @Get('data')

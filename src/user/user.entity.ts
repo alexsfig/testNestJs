@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, BeforeInsert, BeforeUpdate } from 'typeorm';
 import * as crypto from 'crypto';
 import { Cat } from '../cat/cat.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('users')
 export class User {
@@ -22,25 +23,25 @@ export class User {
   })
   public username: string;
 
-  @Column({
-    nullable: false,
-    select: false,
-    length: 250,
+  @Exclude() @Column({ nullable: false, length: 250,
   })
   public password: string;
+
+  @Exclude() @Column({ length: 250, nullable: true })
+  public passwordHash: string;
 
   @OneToMany(type => Cat, cat => cat.user)
   cats: Cat[];
 
-  @BeforeInsert()
-  createPassword() {
-    const passHash = crypto.createHmac('sha256', this.password ).digest('hex');
-    this.password = passHash;
-  }
-  @BeforeUpdate()
-  updatePassword() {
-    const passHash = crypto.createHmac('sha256', this.password ).digest('hex');
-    this.password = passHash;
-  }
+  // @BeforeInsert()
+  // createPassword() {
+  //   const passHash = crypto.createHmac('sha256', this.password ).digest('hex');
+  //   this.password = passHash;
+  // }
+  // @BeforeUpdate()
+  // updatePassword() {
+  //   const passHash = crypto.createHmac('sha256', this.password ).digest('hex');
+  //   this.password = passHash;
+  // }
 
 }

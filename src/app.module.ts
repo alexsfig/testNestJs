@@ -6,6 +6,7 @@ import { Routes, RouterModule } from 'nest-router';
 import { Connection } from 'typeorm';
 import { CatModule } from './cat/cat.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 const routes: Routes = [
   {
@@ -15,7 +16,6 @@ const routes: Routes = [
       {
         path: '/cats',
         module: CatModule,
-
       },
     ],
   },
@@ -27,7 +27,7 @@ const routes: Routes = [
     TypeOrmModule.forRoot(),
     CatModule,
     UserModule,
-    // AuthModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -15,6 +15,8 @@ export class CreateUserDto {
   @ApiModelProperty()
   password: string;
 
+  cats: Cat[]
+
   private
   createPassword: any;
   updatePassword: any;

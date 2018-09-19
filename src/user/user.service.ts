@@ -1,4 +1,4 @@
-import { Injectable, Inject, Body, HttpStatus, HttpException } from '@nestjs/common';
+import { Injectable, Inject, Body, HttpStatus, HttpException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -22,6 +22,11 @@ export class UserService {
     return user;
   }
 
+  async findOneByUsername(username): Promise<User> {
+    let user = await this.userRepository.findOne({ username: username});
+    if(!user)  throw new UnauthorizedException();
+    return user;
+  }
 
   async create(@Body() user: User): Promise<User> {
     const obj = this.userRepository.create(user);

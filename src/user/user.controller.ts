@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Query,UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { FindOneParams } from '../helpers/find_one_params';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiUseTags, ApiBearerAuth, ApiResponse, ApiOperation } from '@nestjs/swagger';
 import { User } from './user.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 
 @ApiUseTags('User')
@@ -20,6 +21,7 @@ export class UserController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard('jwt'))
   findOne(@Param() params: FindOneParams) {
     return this.userService.findOne(params);
   }

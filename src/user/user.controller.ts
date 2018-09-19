@@ -2,16 +2,19 @@ import { Controller, Get, Post, Body, Put, Param, Delete, Query } from '@nestjs/
 import { UserService } from './user.service';
 import { FindOneParams } from '../helpers/find_one_params';
 import { CreateUserDto } from './dto/create-user.dto';
-import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiUseTags, ApiBearerAuth, ApiResponse, ApiOperation } from '@nestjs/swagger';
 import { User } from './user.entity';
 
 
-@ApiUseTags('user')
-@Controller('user')
+@ApiUseTags('User')
+@Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @ApiOperation({title: 'Get List of All Users'})
+  @ApiResponse({ status: 200, description: 'User Found.'})
+  @ApiResponse({ status: 404, description: 'No Users found.'})
   findAll(): Promise<User[]> {
     return this.userService.findAll();
   }

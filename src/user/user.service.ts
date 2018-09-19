@@ -17,7 +17,7 @@ export class UserService {
   }
 
   async findOne(id): Promise<User> {
-    let user = await this.userRepository.findOne(id);
+    let user = await this.userRepository.findOne(id, { relations: ["cats"] });
     if(!user)  throw new AppError(ErrorTypeEnum.NOT_FOUND, User.name);
     return user;
   }

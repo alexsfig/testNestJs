@@ -10,11 +10,11 @@ async function bootstrap() {
   app.useGlobalFilters(new DispatchError());
   app.useGlobalPipes(new ValidationPipe());
   const options = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Cat example')
+    .setDescription('The Cat API description')
     .setVersion('1.0')
-    .addTag('cats')
-    .addTag('user')
+    .addTag('Cat')
+    .addTag('User')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);

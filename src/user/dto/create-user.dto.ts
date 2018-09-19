@@ -1,5 +1,5 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { Cats } from '../../cats/cats.entity';
+import { Cat } from '../../cat/cat.entity';
 
 export class CreateUserDto {
   id: number;
@@ -15,4 +15,7 @@ export class CreateUserDto {
   @ApiModelProperty()
   password: string;
 
+  private
+  createPassword: any;
+  updatePassword: any;
 }

@@ -1,6 +1,7 @@
 import { IsNumber, IsNotEmpty } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { CreateUserDto } from '../../user/dto/create-user.dto';
+import { User } from '../../user/user.entity';
 
 export class CreateCatDto {
   id: number
@@ -14,6 +15,6 @@ export class CreateCatDto {
   breed: string;
 
   @ApiModelProperty()
-  user: CreateUserDto;
+  user: User;
 
 }

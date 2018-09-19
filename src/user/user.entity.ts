@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, BeforeInsert, BeforeUpdate } from 'typeorm';
 import * as crypto from 'crypto';
-import { Cats } from '../cats/cats.entity';
+import { Cat } from '../cat/cat.entity';
 
-@Entity()
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,8 +29,8 @@ export class User {
   })
   public password: string;
 
-  @OneToMany(type => Cats, cat => cat.user)
-  cats: Cats[];
+  @OneToMany(type => Cat, cat => cat.user)
+  cats: Cat[];
 
   @BeforeInsert()
   createPassword() {

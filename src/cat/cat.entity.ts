@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { User } from '../user/user.entity';
 
-@Entity()
-export class Cats {
+@Entity('cats')
+export class Cat {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -15,7 +15,7 @@ export class Cats {
   @Column({ length: 500 })
   breed: string;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, user => user.cats)
   user: User;
 
 }

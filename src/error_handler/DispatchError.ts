@@ -6,12 +6,15 @@ export class DispatchError implements ExceptionFilter {
     catch(exception: any, host: ArgumentsHost): any {
         const ctx = host.switchToHttp();
         const res = ctx.getResponse();
+        const request = ctx.getRequest();
         if (exception instanceof AppError) {
             return res.status(exception.httpStatus).json({
                 errorCode: exception.errorCode,
                 errorMsg: exception.errorMessage,
                 usrMsg: exception.customMessage,
-                httpCode: exception.httpStatus
+                httpCode: exception.httpStatus,
+                path: request.url,
+                timestamp: new Date().toISOString(),
             });
         }
         else if (exception instanceof UnauthorizedException) {

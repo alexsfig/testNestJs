@@ -1,25 +1,31 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CatsController } from './cats/cats.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Routes, RouterModule } from 'nest-router';
 import { Connection } from 'typeorm';
-import { CatsModule } from './cats/cats.module';
+import { CatModule } from './cat/cat.module';
 import { UserModule } from './user/user.module';
 
 const routes: Routes = [
   {
-    path: '/api/v1',
-    module: CatsModule,
+    path: '/api/v1/users',
+    module: UserModule,
+    children: [
+      {
+        path: '/cats',
+        module: CatModule,
 
+      },
+    ],
   },
+
 ];
 @Module({
   imports: [
     RouterModule.forRoutes(routes),
     TypeOrmModule.forRoot(),
-    CatsModule,
+    CatModule,
     UserModule,
     // AuthModule,
   ],

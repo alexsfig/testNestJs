@@ -3,6 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { UserService } from '../user/user.service';
 import * as crypto from 'crypto';
+import {ErrorTypeEnum} from '../error_handler/ErrorTypeEnum';
+import {AppError} from '../error_handler/AppError';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +26,7 @@ export class AuthService {
         };
       }
     }
-    return { message: 'Username or password wrong!' };
+    throw new AppError(ErrorTypeEnum.INVALID_USER_OR_PASSWORD, undefined);
   }
 
   async validateUser(payload: JwtPayload): Promise<any> {

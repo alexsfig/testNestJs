@@ -1,12 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, BeforeInsert, BeforeUpdate, ObjectIdColumn, ObjectID } from 'typeorm';
 import * as crypto from 'crypto';
 import { Cat } from '../cat/cat.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @ObjectIdColumn() id: ObjectID;
 
   @Column({
     length: 30
@@ -19,6 +18,7 @@ export class User {
   public lastName: string;
 
   @Column({
+    unique: true,
     length: 50
   })
   public username: string;

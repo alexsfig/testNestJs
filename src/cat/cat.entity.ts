@@ -1,10 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ObjectIdColumn, ObjectID } from 'typeorm';
 import { User } from '../user/user.entity';
 
 @Entity('cats')
 export class Cat {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @ObjectIdColumn() id: ObjectID;
+  // @PrimaryGeneratedColumn()
+  // id: number;
 
   @Column({ length: 500 })
   name: string;

@@ -1,8 +1,9 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Cat } from '../../cat/cat.entity';
+import { ObjectID } from 'typeorm';
 
 export class CreateUserDto {
-  id: number;
+  id: ObjectID;
   @ApiModelProperty()
   firstName: string;
 
